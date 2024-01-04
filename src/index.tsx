@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import {
   Application,
   DefaultTheme,
@@ -5,29 +6,29 @@ import {
   Reflection,
   DefaultThemeRenderContext,
   Options,
-} from "typedoc";
-
-export function load(app: Application) {
-  app.renderer.defineTheme("navigation", OverrideTheme);
-}
-
-export class OverrideTheme extends DefaultTheme {
-  private _contextCache?: OverrideThemeContext;
-
-  override getRenderContext(pageEvent: PageEvent<Reflection>): OverrideThemeContext {
-    this._contextCache ||= new OverrideThemeContext(
-      this,
-      pageEvent,
-      this.application.options,
-    );
-    return this._contextCache;
-  }
-}
+} from 'typedoc';
 
 export class OverrideThemeContext extends DefaultThemeRenderContext {
   constructor(theme: DefaultTheme, page: PageEvent<Reflection>, options: Options) {
     super(theme, page, options);
-    const _navigation = this.navigation;
-    this.navigation = _navigation;
+    const { navigation } = this;
+    this.navigation = navigation;
   }
+}
+
+export class OverrideTheme extends DefaultTheme {
+  private contextCache?: OverrideThemeContext;
+
+  override getRenderContext(pageEvent: PageEvent<Reflection>): OverrideThemeContext {
+    this.contextCache ||= new OverrideThemeContext(
+      this,
+      pageEvent,
+      this.application.options,
+    );
+    return this.contextCache;
+  }
+}
+
+export function load(app: Application) {
+  app.renderer.defineTheme('navigation', OverrideTheme);
 }
