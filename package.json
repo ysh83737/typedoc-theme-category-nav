@@ -20,14 +20,15 @@
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",
     "typedoc": "^0.25.6",
+    "typedoc-theme-category-nav": "file:.",
     "typescript": "^5.3.3"
   },
   "peerDependencies": {
     "typedoc": "^0.25.6"
   },
   "scripts": {
-    "build": "tsc",
-    "docs": "typedoc src --plugin ./dist/index.js --theme navigation",
+    "build": "tsc && cp -r src/assets dist",
+    "docs": "typedoc",
     "preview": "npm run build && npm run docs"
   }
 }
