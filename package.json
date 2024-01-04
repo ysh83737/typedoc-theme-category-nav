@@ -26,6 +26,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "docs": "typedoc src --plugin ./dist/index.js --theme navigation"
+    "docs": "typedoc src --plugin ./dist/index.js --theme navigation",
+    "preview": "npm run build && npm run docs"
   }
 }
