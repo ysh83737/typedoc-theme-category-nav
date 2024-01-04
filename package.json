@@ -30,5 +30,15 @@
     "build": "tsc && cp -r src/assets dist",
     "docs": "typedoc",
     "preview": "npm run build && npm run docs"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ysh83737/typedoc-theme-category-nav.git"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "files": [
+    "dist"
+  ]
 }
