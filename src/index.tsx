@@ -1,4 +1,6 @@
 /* eslint-disable max-classes-per-file */
+import fs from 'node:fs';
+import path from 'node:path';
 import {
   Application,
   DeclarationReflection,
@@ -9,6 +11,8 @@ import {
   PageEvent,
   Reflection,
   ReflectionCategory,
+  Renderer,
+  RendererEvent,
 } from 'typedoc';
 
 function classNames(names: Record<string, boolean | null | undefined>, extraCss?: string) {
@@ -85,6 +89,19 @@ export class OverrideThemeContext extends DefaultThemeRenderContext {
 export class OverrideTheme extends DefaultTheme {
   private contextCache?: OverrideThemeContext;
 
+  public constructor(renderer: Renderer) {
+    super(renderer);
+
+    // Copy assets to output directory when the doc render ended.
+    this.listenTo(this.owner, RendererEvent.END, (event: RendererEvent) => {
+      fs.cpSync(
+        path.join(require.resolve('typedoc-theme-category-nav'), '../assets'),
+        path.join(event.outputDirectory, 'assets'),
+        { force: true, recursive: true },
+      );
+    });
+  }
+
   override getRenderContext(pageEvent: PageEvent<Reflection>): OverrideThemeContext {
     this.contextCache ||= new OverrideThemeContext(
       this,
@@ -96,5 +113,15 @@ export class OverrideTheme extends DefaultTheme {
 }
 
 export function load(app: Application) {
+  // insert stylesheet
+  app.renderer.hooks.on(
+    'head.end',
+    (context): JSX.Element => (
+      <link
+        rel='stylesheet'
+        href={context.relativeURL('assets/category-nav.css')}
+      />
+    ),
+  );
   app.renderer.defineTheme('navigation', OverrideTheme);
 }
