@@ -27,7 +27,7 @@ function classNames(names: Record<string, boolean | null | undefined>, extraCss?
 
 /**
  * Theme render context.
- * @category render
+ * @category Render
  */
 export class OverrideThemeContext extends DefaultThemeRenderContext {
   constructor(theme: DefaultTheme, page: PageEvent<Reflection>, options: Options) {
@@ -40,12 +40,14 @@ export class OverrideThemeContext extends DefaultThemeRenderContext {
     const { categories } = props.model.project;
     return (
       <nav class="tsd-navigation">
-        <a
-          href={this.urlTo(props.project)}
-          class={classNames({ current: props.project === props.model })}
-        >
-          目录
-        </a>
+        <h2 class="tsd-navigation__title">
+          <a
+            href={this.urlTo(props.project)}
+            class={classNames({ current: props.project === props.model })}
+          >
+            CONTENTS
+          </a>
+        </h2>
         { categories?.map((item) => this.renderCategory(item, props.model.url as string)) }
       </nav>
     );
@@ -73,7 +75,7 @@ export class OverrideThemeContext extends DefaultThemeRenderContext {
       <li>
         <a
           href={this.relativeURL(url as string)}
-          class={classNames({ current: currentUrl === url })}
+          class={classNames({ current: currentUrl === url, 'tsd-navigation__category__link': true })}
         >
           {name}
         </a>
@@ -84,7 +86,7 @@ export class OverrideThemeContext extends DefaultThemeRenderContext {
 
 /**
  * The theme.
- * @category theme
+ * @category Theme
  */
 export class OverrideTheme extends DefaultTheme {
   private contextCache?: OverrideThemeContext;
