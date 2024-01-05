@@ -96,8 +96,13 @@ export class OverrideTheme extends DefaultTheme {
 
     // Copy assets to output directory when the doc render ended.
     this.listenTo(this.owner, RendererEvent.END, (event: RendererEvent) => {
+      const sourceAssets = process.env.DOC_ENV === 'development'
+        ? path.resolve(__dirname, '../dist/assets')
+        // production (default)
+        : path.resolve(require.resolve('typedoc-theme-category-nav'), '../assets');
+
       fs.cpSync(
-        path.join(require.resolve('typedoc-theme-category-nav'), '../assets'),
+        sourceAssets,
         path.join(event.outputDirectory, 'assets'),
         { force: true, recursive: true },
       );

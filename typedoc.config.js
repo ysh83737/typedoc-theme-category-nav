@@ -3,8 +3,6 @@ module.exports = {
   entryPoints: ['src'],
   tsconfig: './tsconfig.json',
   name: 'Demo Docs',
-  plugin: [
-    'typedoc-theme-category-nav',
-  ],
+  plugin: ['./dist/index.js'],
   theme: 'navigation',
 };

@@ -4,24 +4,24 @@ specifiers:
   '@types/node': ^20.10.6
   '@typescript-eslint/eslint-plugin': ^6.17.0
   '@typescript-eslint/parser': ^6.17.0
+  cross-env: ^7.0.3
   eslint: ^8.56.0
   eslint-config-airbnb-base: ^15.0.0
   eslint-config-airbnb-typescript: ^17.1.0
   eslint-plugin-import: ^2.29.1
   typedoc: ^0.25.6
-  typedoc-theme-category-nav: file:.
   typescript: ^5.3.3
 
 devDependencies:
   '@types/node': 20.10.6
   '@typescript-eslint/eslint-plugin': 6.17.0_tpgvsmrbmuays342irf4bxhdxe
   '@typescript-eslint/parser': 6.17.0_xdgzedli73k7lw4xlyzszm74om
+  cross-env: 7.0.3
   eslint: 8.56.0
   eslint-config-airbnb-base: 15.0.0_p3qtbz6miylwitk5ew22wvdzca
   eslint-config-airbnb-typescript: 17.1.0_s4nen56uvpoqohtn3q623ccrya
   eslint-plugin-import: 2.29.1_6uvzb3rk2yeco27jj3z7v3ufyq
   typedoc: 0.25.6_typescript@5.3.3
-  typedoc-theme-category-nav: file:_typedoc@0.25.6
   typescript: 5.3.3
 
 packages:
@@ -440,6 +440,14 @@ packages:
 
   /confusing-browser-globals/1.0.11:
     resolution: {integrity: sha512-JsPKdmh8ZkmnHxDk55FZ1TqVLvEQTvoByJZRN9jzI0UjxK/QgAmsphz7PGtqgPieQZ/CQcHWXCR7ATDNhGe+YA==}
+    dev: true
+
+  /cross-env/7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
     dev: true
 
   /cross-spawn/7.0.3:
@@ -1754,16 +1762,4 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
-    dev: true
-
-  file:_typedoc@0.25.6:
-    resolution: {directory: '', type: directory}
-    id: 'file:'
-    name: typedoc-theme-category-nav
-    version: 0.0.1
-    engines: {node: '>= 18'}
-    peerDependencies:
-      typedoc: ^0.25.6
-    dependencies:
-      typedoc: 0.25.6_typescript@5.3.3
     dev: true
