@@ -30,29 +30,72 @@ function classNames(names: Record<string, boolean | null | undefined>, extraCss?
  * @category Render
  */
 export class OverrideThemeContext extends DefaultThemeRenderContext {
+  /** The preset toolbar */
+  presetToolbar: typeof this.toolbar;
+
   constructor(theme: DefaultTheme, page: PageEvent<Reflection>, options: Options) {
     super(theme, page, options);
 
     this.navigation = this.overrideNavigation;
+
+    this.presetToolbar = this.toolbar;
+    this.toolbar = this.overrideToolbar;
+
+    // remove footer
+    this.footer = () => null as never;
   }
 
+  /**
+   * The new navigation.
+   * - add search component to the top
+   * - split by categories
+   * @param props
+   */
   overrideNavigation(props: PageEvent<Reflection>) {
     const { categories } = props.model.project;
     return (
       <nav class="tsd-navigation">
-        <h2 class="tsd-navigation__title">
-          <a
-            href={this.urlTo(props.project)}
-            class={classNames({ current: props.project === props.model })}
-          >
-            CONTENTS
-          </a>
-        </h2>
-        { categories?.map((item) => this.renderCategory(item, props.model.url as string)) }
+        <div class="tsd-navigation__toolbar-box">
+          { this.presetToolbar(props) }
+        </div>
+        <div class="tsd-navigation__main">
+          <h2 class="tsd-navigation__title">
+            <a
+              href={this.urlTo(props.project)}
+              class={classNames({ current: props.project === props.model })}
+            >
+              CONTENTS
+            </a>
+          </h2>
+          { categories?.map((item) => this.renderCategory(item, props.model.url as string)) }
+        </div>
       </nav>
     );
   }
 
+  /**
+   * The new toolbar. Remove search component. Keep original styles.
+   * @param props
+   */
+  overrideToolbar(props: PageEvent<Reflection>) {
+    return (
+      <header class="tsd-page-toolbar">
+        <div class="tsd-toolbar-contents container">
+          <div class="table-cell">
+            <a href={this.options.getValue('titleLink') || this.relativeURL('index.html')} class="title">
+              { props.project.name }
+            </a>
+          </div>
+        </div>
+      </header>
+    );
+  }
+
+  /**
+   * Render category and its children.
+   * @param cat category data
+   * @param currentUrl
+   */
   renderCategory(cat: ReflectionCategory, currentUrl: string) {
     const { title, children } = cat;
     return (
