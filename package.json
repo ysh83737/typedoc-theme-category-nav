@@ -20,6 +20,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-plugin-import": "^2.29.1",
+    "sass": "^1.69.7",
     "typedoc": "^0.25.6",
     "typescript": "^5.3.3"
   },
@@ -27,7 +28,9 @@
     "typedoc": "^0.25.6"
   },
   "scripts": {
-    "build": "tsc && cp -r src/assets dist",
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "tsc",
+    "build:css": "sass src/assets:dist/assets --style=compressed --no-source-map",
     "docs": "cross-env DOC_ENV=development typedoc",
     "preview": "npm run build && npm run docs"
   },
