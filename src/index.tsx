@@ -14,6 +14,8 @@ import {
   Renderer,
   RendererEvent,
 } from 'typedoc';
+import IconTheme from './components/IconTheme';
+import IconThemeAuto from './components/IconThemeAuto';
 
 function classNames(names: Record<string, boolean | null | undefined>, extraCss?: string) {
   const css = Object.keys(names)
@@ -43,6 +45,8 @@ export class OverrideThemeContext extends DefaultThemeRenderContext {
 
     // remove footer
     this.footer = () => null as never;
+    // remove settings
+    this.settings = () => null as never;
   }
 
   /**
@@ -79,12 +83,27 @@ export class OverrideThemeContext extends DefaultThemeRenderContext {
    */
   overrideToolbar(props: PageEvent<Reflection>) {
     return (
-      <header class="tsd-page-toolbar">
+      <header class="tsd-page-toolbar tsd-navigation__header__toolbar">
         <div class="tsd-toolbar-contents container">
-          <div class="table-cell">
-            <a href={this.options.getValue('titleLink') || this.relativeURL('index.html')} class="title">
-              { props.project.name }
-            </a>
+          <a href={this.options.getValue('titleLink') || this.relativeURL('index.html')} class="title">
+            { props.project.name }
+          </a>
+          <div class="tsd-navigation__header__toolbar__right">
+            <div id="tsd-toolbar-links">
+              {
+                Object.entries(this.options.getValue('navigationLinks')).map(([label, url]) => (
+                  <a href={url}>{label}</a>
+                ))
+              }
+            </div>
+            <div id="tsd-navigation-theme" class="tsd-navigation__header__toolbar__theme">
+              <div class="theme-normal svg-22">
+                <IconTheme />
+              </div>
+              <div class="theme-os svg-20">
+                <IconThemeAuto />
+              </div>
+            </div>
           </div>
         </div>
       </header>
@@ -171,6 +190,14 @@ export function load(app: Application) {
         rel='stylesheet'
         href={context.relativeURL('assets/style/category-nav.css')}
       />
+    ),
+  );
+
+  // insert javascript
+  app.renderer.hooks.on(
+    'body.end',
+    (context): JSX.Element => (
+      <script src={context.relativeURL('assets/lib/category-nav.js')} />
     ),
   );
   app.renderer.defineTheme('navigation', OverrideTheme);
