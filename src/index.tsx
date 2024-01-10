@@ -169,7 +169,7 @@ export function load(app: Application) {
     (context): JSX.Element => (
       <link
         rel='stylesheet'
-        href={context.relativeURL('assets/category-nav.css')}
+        href={context.relativeURL('assets/style/category-nav.css')}
       />
     ),
   );

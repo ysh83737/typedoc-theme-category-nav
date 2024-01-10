@@ -30,7 +30,7 @@
   "scripts": {
     "build": "npm run build:js && npm run build:css",
     "build:js": "tsc",
-    "build:css": "sass src/assets:dist/assets --style=compressed --no-source-map",
+    "build:css": "sass src/assets/style:dist/assets/style --style=compressed --no-source-map",
     "docs": "cross-env DOC_ENV=development typedoc",
     "preview": "npm run build && npm run docs"
   },
