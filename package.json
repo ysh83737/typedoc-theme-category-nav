@@ -1,6 +1,6 @@
 {
   "name": "typedoc-theme-category-nav",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Typedoc theme. Navigate by categories.",
   "main": "dist/index.js",
   "keywords": [
